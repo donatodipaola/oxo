@@ -19,7 +19,6 @@
 #include <gui.h>
 
 #include <stdio.h>
-#include <string.h>
 
 
 #define BOARD_SIDE_DIMENSION        3
