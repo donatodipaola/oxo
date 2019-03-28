@@ -23,6 +23,9 @@
 
 #define BOARD_SIDE_DIMENSION        3
 
+#define CURSOR_UP  "\x1b[A"
+#define ERASE_LINE "\33[2K\r"
+
 char _get_marker_char(Marker maker)
 {
     if(maker == O)      return 'O';
@@ -99,12 +102,11 @@ void _display_result_message(Status status)
 }
 
 
-
 void clean_screen() {
-    printf("\x1b[A");
+    printf(CURSOR_UP);
     for (unsigned int i=0; i < 7; ++i) {
-        printf("\33[2K\r");
-        printf("\x1b[A");
+        printf(ERASE_LINE);
+        printf(CURSOR_UP);
     }
 }
 
