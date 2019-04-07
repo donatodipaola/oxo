@@ -16,38 +16,70 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- #include <stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include <gui.h>
 #include <game.h>
+#include <ai.h>
+
 
 void play()
 {
     int board[BOARD_NUMEBER_OF_SQUARES];
     init_board(board);
 
-    Marker turn_marker = O;
+    Marker turn_marker;
+    srand(time(NULL));
+
+    int a_coin_toss = rand() % 2;
+    if (a_coin_toss == 0)
+        turn_marker = HUMAN_MARKER;
+    if (a_coin_toss == 1)
+        turn_marker = AI_MARKER;
+
     Status status = UNKNOWN;
+
     do {
         clean_screen();
         display_game_screen(board, turn_marker);
 
-        if( move(board, get_move(), turn_marker) )
-            turn_marker = turn_marker == O ? X : O;
-
+        switch (turn_marker) {
+   	    case HUMAN_MARKER:
+            if( move(board, get_move(), HUMAN_MARKER) )
+                turn_marker = AI_MARKER;
+   	    	break;
+ 	    case AI_MARKER:
+            if( move(board, ai_move(board), AI_MARKER) )
+            {
+                printf("\n");
+                turn_marker = HUMAN_MARKER;
+            }
+   	    	break;
+        case EMPTY:
+            break;
+	    }
   } while (! is_game_over(board, &status));
+  
   clean_screen();
   display_result_screen(board, status);
 }
 
+
 int main()
 {
-    display_menu_screen();
-
     int menu_choice;
-    menu_choice = get_menu_choice();
-    if(menu_choice == 1)
-        play();
-
+    do
+    {
+        display_menu_screen();
+        menu_choice = get_menu_choice();
+        if(menu_choice == 1)
+        {
+            play();
+            return 0;
+        }
+        clean_screen();
+    } while (menu_choice != 2);
     return 0;
 }

@@ -21,15 +21,17 @@
 #include <stdio.h>
 
 
-#define BOARD_SIDE_DIMENSION        3
+#define BOARD_SIDE_DIMENSION    3
+
+#define SCREEN_HEIGHT           8
 
 #define CURSOR_UP  "\x1b[A"
 #define ERASE_LINE "\33[2K\r"
 
 char _get_marker_char(Marker maker)
 {
-    if(maker == O)      return 'O';
-    if(maker == X)      return 'X';
+    if(maker == O)    return 'O';
+    if(maker == X)    return 'X';
     return '.';
 }
 
@@ -43,7 +45,7 @@ void _display_menu_title() {
 }
 
 void _display_game_title(Marker marker) {
-    printf("   OXO    |  Player %c's turn \n", _get_marker_char(marker));
+    printf("   OXO    |  Player [%c] turn \n", _get_marker_char(marker));
 }
 
 void _display_result_title() {
@@ -79,19 +81,19 @@ void _display_result_message(Status status)
 {
     switch(status)
     {
-        case (O_WON):
+        case (AI_WON):
         {
-            printf("          |  Player O won!\n");
+            printf("          |  AI won\n");
             break;
         }
-        case (X_WON):
+        case (HUMAN_WON):
         {
-            printf("          |  Player X won!\n");
+            printf("          |  Player won\n");
             break;
         }
         case (TIE):
         {
-            printf("          |  Tie!\n");
+            printf("          |  Drawn game\n");
             break;
         }
         case (UNKNOWN):
@@ -104,7 +106,7 @@ void _display_result_message(Status status)
 
 void clean_screen() {
     printf(CURSOR_UP);
-    for (unsigned int i=0; i < 7; ++i) {
+    for (unsigned int i=0; i < SCREEN_HEIGHT - 1; ++i) {
         printf(ERASE_LINE);
         printf(CURSOR_UP);
     }
