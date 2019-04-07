@@ -16,18 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GAME_H__
-#define __GAME_H__
+#ifndef __AI_H__
+#define __AI_H__
+
+#define AI_MARKER       O
+#define HUMAN_MARKER    X
+
+int ai_move(const int* board);
 
 
-#define BOARD_NUMEBER_OF_SQUARES    9
-
-typedef enum Marker_t {O, X, EMPTY} Marker;
-typedef enum Status_t {UNKNOWN, HUMAN_WON, AI_WON, TIE} Status;
-
-void init_board(int* board);
-int move(int* board, const int position, Marker marker);
-int is_game_over(const int* board, Status* status);
-
-
-#endif /* __GAME_H__ */
+#endif /* __AI_H__ */

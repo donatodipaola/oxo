@@ -88,12 +88,12 @@ int is_game_over(const int* board, Status* status)
 {
   if( _has_player_won(board,O) )
   {
-    *status = O_WON;
+    *status = AI_WON;
     return 1;
   }
   if( _has_player_won(board,X) )
   {
-    *status = X_WON;
+    *status = HUMAN_WON;
     return 1;
   }
   if( _are_no_more_moves(board) )
