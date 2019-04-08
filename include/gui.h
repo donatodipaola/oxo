@@ -23,11 +23,9 @@
 
 
 void clean_screen();
-void display_menu_screen();
 void display_game_screen(int* board, Marker marker);
 void display_result_screen(int* board, Status status) ;
 
-int get_menu_choice();
 int get_move();
 
 
