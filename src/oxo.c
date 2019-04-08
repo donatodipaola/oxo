@@ -25,7 +25,7 @@
 #include <ai.h>
 
 
-void play()
+int main()
 {
     int board[BOARD_NUMEBER_OF_SQUARES];
     init_board(board);
@@ -42,44 +42,28 @@ void play()
     Status status = UNKNOWN;
 
     do {
-        clean_screen();
         display_game_screen(board, turn_marker);
 
         switch (turn_marker) {
-   	    case HUMAN_MARKER:
+        case HUMAN_MARKER:
             if( move(board, get_move(), HUMAN_MARKER) )
                 turn_marker = AI_MARKER;
-   	    	break;
- 	    case AI_MARKER:
+            break;
+        case AI_MARKER:
             if( move(board, ai_move(board), AI_MARKER) )
             {
                 printf("\n");
                 turn_marker = HUMAN_MARKER;
             }
-   	    	break;
+            break;
         case EMPTY:
             break;
-	    }
-  } while (! is_game_over(board, &status));
-  
-  clean_screen();
-  display_result_screen(board, status);
-}
-
-
-int main()
-{
-    int menu_choice;
-    do
-    {
-        display_menu_screen();
-        menu_choice = get_menu_choice();
-        if(menu_choice == 1)
-        {
-            play();
-            return 0;
         }
+
         clean_screen();
-    } while (menu_choice != 2);
+    } while (! is_game_over(board, &status));
+
+    display_result_screen(board, status);
+
     return 0;
 }

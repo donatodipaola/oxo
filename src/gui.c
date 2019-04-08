@@ -40,22 +40,12 @@ char _get_marker_by_coordinates(const int* board, int x, int y)
   return board[x+BOARD_SIDE_DIMENSION*y];
 }
 
-void _display_menu_title() {
-    printf("   OXO    |  Main Menu  \n");
-}
-
 void _display_game_title(Marker marker) {
     printf("   OXO    |  Player [%c] turn \n", _get_marker_char(marker));
 }
 
 void _display_result_title() {
     printf("   OXO    |  Game Over \n");
-}
-
-void _display_menu() {
-    printf(" 1  2  3  |  1. Play \n");
-    printf(" 4  5  6  |  2. Quit \n");
-    printf(" 7  8  9  |  \n");
 }
 
 void _display_board(int* board) {
@@ -112,15 +102,6 @@ void clean_screen() {
     }
 }
 
-void display_menu_screen() {
-    printf("\n");
-    _display_menu_title();
-    printf("\n");
-    _display_menu();
-    printf("\n");
-    _display_choice_message();
-}
-
 void display_game_screen(int* board, Marker marker) {
     printf("\n");
     _display_game_title(marker);
@@ -138,13 +119,6 @@ void display_result_screen(int* board, Status status)
     _display_board(board);
     printf("\n");
     _display_result_message(status);
-}
-
-int get_menu_choice()
-{
-    int menu_choice;
-    scanf("%d", &menu_choice);
-    return menu_choice;
 }
 
 int get_move()
