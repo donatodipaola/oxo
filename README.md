@@ -18,6 +18,9 @@ make oxo
 ./oxo
 ```
 
+### Screenshot
+![Screenshot](https://user-images.githubusercontent.com/5897858/55745389-6672a000-5a37-11e9-8f6f-e9aac725b6a2.png)
+
 ## License
 This code is under the terms of the GPL Version 3 License.
 See the file `LICENSE.txt` for more details.
