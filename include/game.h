@@ -22,7 +22,7 @@
 
 #define BOARD_NUMEBER_OF_SQUARES    9
 
-typedef enum Marker_t {O, X, EMPTY} Marker;
+typedef enum Marker_t {O = 1, X = -1, EMPTY = 0} Marker;
 typedef enum Status_t {UNKNOWN, HUMAN_WON, AI_WON, TIE} Status;
 
 void init_board(int* board);

@@ -22,7 +22,7 @@
 #define AI_MARKER       O
 #define HUMAN_MARKER    X
 
-int ai_move(const int* board);
+int ai_move(int* board);
 
 
 #endif /* __AI_H__ */
