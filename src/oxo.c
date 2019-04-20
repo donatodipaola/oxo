@@ -54,6 +54,10 @@ int main()
             {
                 printf("\n");
                 turn_marker = HUMAN_MARKER;
+            } else
+            {
+              // AI picked an invalid position... something went wrong
+              abort();
             }
             break;
         case EMPTY:
