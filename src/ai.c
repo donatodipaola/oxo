@@ -17,83 +17,93 @@
  */
 
 #include <ai.h>
-
 #include <game.h>
+#include <limits.h>
 
-#define EMPTY_SCORE     0
-#define AI_SCORE        1
-#define HUMAN_SCORE     -1
-
-int get_other_player_score(int player_score)
+typedef enum
 {
-    if(player_score == HUMAN_SCORE)
+    HUMAN_ROUND = -1,
+    AI_ROUND = 1
+} RoundType;
+
+int minmax(int* board, RoundType roundType)
+{
+    Status status;
+    if (is_game_over(board, &status))
     {
-        return AI_SCORE;
+        if (status == AI_WON)
+        {
+            return 1;
+        }
+        else if (status == HUMAN_WON)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    int value;
+
+    if (roundType == HUMAN_ROUND)
+    {
+        value = INT_MAX;
+        for (int i = 0; i < BOARD_NUMEBER_OF_SQUARES; ++i)
+        {
+            if (board[i] == EMPTY)
+            {
+                board[i] = HUMAN_MARKER;
+                const int action_result = minmax(board, AI_ROUND);
+                board[i] = EMPTY;
+                if (action_result < value)
+                {
+                    value = action_result;
+                }
+            }
+        }
     }
     else
     {
-        return HUMAN_SCORE;
-    }
-}
-
-void convert_board(const int* board, int* score_board)
-{
-    for(int i = 0; i < BOARD_NUMEBER_OF_SQUARES; ++i)
-    {
-        if(board[i] == O) score_board[i] = AI_SCORE;
-        if(board[i] == X) score_board[i] = HUMAN_SCORE;
-        if(board[i] == EMPTY) score_board[i] = EMPTY_SCORE;
-    }
-}
-
-int minimax(int* board, int player_score) {
-    Status status = UNKNOWN;
-    if (is_game_over(board, &status))
-    {
-        if(status == AI_WON) return HUMAN_SCORE*player_score;
-        if(status == HUMAN_WON) return AI_SCORE*player_score;
-    }
-
-    int move = -1;
-    int score = -2;
-
-    for(int i = 0; i < BOARD_NUMEBER_OF_SQUARES; ++i)
-    {
-        if(board[i] == EMPTY_SCORE)
+        value = INT_MIN;
+        for (int i = 0; i < BOARD_NUMEBER_OF_SQUARES; ++i)
         {
-            board[i] = player_score;
-            int move_score = -minimax(board, get_other_player_score(player_score));
-            if(move_score > score)
+            if (board[i] == EMPTY)
             {
-                score = move_score;
+                board[i] = AI_MARKER;
+                const int action_result = minmax(board, HUMAN_ROUND);
+                board[i] = EMPTY;
+                if (value < action_result)
+                {
+                    value = action_result;
+                }
+            }
+        }
+    }
+
+    return value;
+}
+
+int ai_move(int* board)
+{
+    int move = -1;
+    int score = INT_MIN;
+
+    for (int i = 0; i < BOARD_NUMEBER_OF_SQUARES; ++i)
+    {
+        if (board[i] == EMPTY)
+        {
+            board[i] = AI_MARKER;
+            const int action_result = minmax(board, HUMAN_ROUND);
+            board[i] = EMPTY;
+            if (score < action_result)
+            {
+                score = action_result;
                 move = i;
             }
         }
     }
-    if(move == -1)
-        return 0;
-    return score;
-}
 
-int ai_move(const int* board)
-{
-    int move = -1;
-    int score = -2;
-    int score_board[BOARD_NUMEBER_OF_SQUARES];
-    convert_board(board, score_board);
-
-    for(int i = 0; i < BOARD_NUMEBER_OF_SQUARES; ++i)
-    {
-        if(score_board[i] == EMPTY_SCORE)
-        {
-            score_board[i] = AI_SCORE;
-            int tempScore = -minimax(score_board, HUMAN_SCORE);
-            if(tempScore > score)
-            {
-                score = tempScore;
-                move = i;
-            }
-        }
-    }
     return move;
 }
