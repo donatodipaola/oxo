@@ -19,7 +19,8 @@
 #include <gui.h>
 
 #include <stdio.h>
-
+#include <ctype.h>
+#include <string.h>
 
 #define BOARD_SIDE_DIMENSION    3
 
@@ -121,9 +122,19 @@ void display_result_screen(int* board, Status status)
     _display_result_message(status);
 }
 
+int chartoi(const char character)
+{
+    return character - '0';
+}
+
 int get_move()
 {
-    int move;
-    scanf("%d", &move);
-    return move - 1;
+    char move[20]; 
+    scanf("%[^\n]%*c", move);
+    if( (strlen(move) == 1) && isdigit(move[0]) )
+    {
+        // conversion to internal board value range (0-8) from user input (1-9)
+        return chartoi(move[0]) - 1;
+    }
+    return -1;
 }
