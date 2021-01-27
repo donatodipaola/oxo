@@ -23,8 +23,10 @@
 
 
 void clean_screen();
-void display_game_screen(int* board, Marker marker);
-void display_result_screen(int* board, Status status) ;
+void display_menu_screen();
+void display_game_screen(const int* board, const Marker marker);
+void display_result_screen(const int* board, const Status status);
+Level get_level_choice();
 int get_move();
 
 #endif /* __GUI_H__ */
