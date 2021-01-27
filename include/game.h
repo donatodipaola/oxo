@@ -20,7 +20,7 @@
 #define __GAME_H__
 
 
-#define BOARD_NUMEBER_OF_SQUARES    9
+#define BOARD_NUMBER_OF_SQUARES    9
 
 typedef enum Marker_t {O = 1, X = -1, EMPTY = 0} Marker;
 typedef enum Status_t {UNKNOWN, HUMAN_WON, AI_WON, TIE} Status;
@@ -28,6 +28,5 @@ typedef enum Status_t {UNKNOWN, HUMAN_WON, AI_WON, TIE} Status;
 void init_board(int* board);
 int move(int* board, const int position, Marker marker);
 int is_game_over(const int* board, Status* status);
-
 
 #endif /* __GAME_H__ */

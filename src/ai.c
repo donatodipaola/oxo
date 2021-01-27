@@ -20,6 +20,7 @@
 #include <game.h>
 #include <limits.h>
 
+
 typedef enum
 {
     HUMAN_ROUND = -1,
@@ -50,7 +51,7 @@ int minmax(int* board, RoundType roundType)
     if (roundType == HUMAN_ROUND)
     {
         value = INT_MAX;
-        for (int i = 0; i < BOARD_NUMEBER_OF_SQUARES; ++i)
+        for (int i = 0; i < BOARD_NUMBER_OF_SQUARES; ++i)
         {
             if (board[i] == EMPTY)
             {
@@ -67,7 +68,7 @@ int minmax(int* board, RoundType roundType)
     else
     {
         value = INT_MIN;
-        for (int i = 0; i < BOARD_NUMEBER_OF_SQUARES; ++i)
+        for (int i = 0; i < BOARD_NUMBER_OF_SQUARES; ++i)
         {
             if (board[i] == EMPTY)
             {
@@ -90,7 +91,7 @@ int ai_move(int* board)
     int move = -1;
     int score = INT_MIN;
 
-    for (int i = 0; i < BOARD_NUMEBER_OF_SQUARES; ++i)
+    for (int i = 0; i < BOARD_NUMBER_OF_SQUARES; ++i)
     {
         if (board[i] == EMPTY)
         {

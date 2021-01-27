@@ -24,5 +24,4 @@
 
 int ai_move(int* board);
 
-
 #endif /* __AI_H__ */
