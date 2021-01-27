@@ -30,6 +30,26 @@
 #define CURSOR_UP  "\x1b[A"
 #define ERASE_LINE "\33[2K\r"
 
+int _char_to_int(const char character)
+{
+    return character - '0';
+}
+
+int _get_user_input()
+{
+    char move[20]; 
+    scanf("%[^\n]%*c", move);
+    if( (strlen(move) == 1) && isdigit(move[0]) )
+    {
+        return _char_to_int(move[0]);
+    }
+    return -1;
+}
+int _convert_to_internal_board_position(const int position)
+{
+    return (position - 1);
+}
+
 char _get_marker_char(Marker maker) 
 {
     if(maker == O)    return 'O';
@@ -37,12 +57,17 @@ char _get_marker_char(Marker maker)
     return '.';
 }
 
-char _get_marker_by_coordinates(const int* board, int x, int y) 
+char _get_marker_by_coordinates(const int* board, const int x, const int y) 
 {
   return board[x+BOARD_SIDE_DIMENSION*y];
 }
 
-void _display_game_title(Marker marker) 
+void _display_menu_title() 
+{
+    printf("   OXO    |  Game level: \n");
+}
+
+void _display_game_title(const Marker marker) 
 {
     printf("   OXO    |  Player [%c] turn \n", _get_marker_char(marker));
 }
@@ -52,7 +77,14 @@ void _display_result_title()
     printf("   OXO    |  Game Over \n");
 }
 
-void _display_board(int* board) 
+void _display_menu() 
+{
+    printf(" O  X  O  |  1. Easy\n");
+    printf(" X  O  X  |  2. Medium\n");
+    printf(" 0  X  O  |  3. Hard\n");
+}
+
+void _display_board(const int* board) 
 {
     unsigned int offset[] = {0,3,6};
     for (unsigned int i=0; i < 3; ++i) 
@@ -76,7 +108,7 @@ void _display_move_message()
     printf("          |  Player's move :");
 }
 
-void _display_result_message(Status status) 
+void _display_result_message(const Status status) 
 {
     switch(status)
     {
@@ -103,6 +135,7 @@ void _display_result_message(Status status)
 }
 
 
+
 void clean_screen() 
 {
     printf(CURSOR_UP);
@@ -113,7 +146,17 @@ void clean_screen()
     }
 }
 
-void display_game_screen(int* board, Marker marker) 
+void display_menu_screen()
+{
+    printf("\n");
+    _display_menu_title();
+    printf("\n");
+    _display_menu();
+    printf("\n");
+    _display_choice_message();
+}
+
+void display_game_screen(const int* board, const Marker marker) 
 {
     printf("\n");
     _display_game_title(marker);
@@ -123,7 +166,7 @@ void display_game_screen(int* board, Marker marker)
     _display_move_message();
 }
 
-void display_result_screen(int* board, Status status)
+void display_result_screen(const int* board, const Status status)
 {
     printf("\n");
     _display_result_title();
@@ -133,19 +176,37 @@ void display_result_screen(int* board, Status status)
     _display_result_message(status);
 }
 
-int chartoint(const char character)
+Level get_level_choice()
 {
-    return character - '0';
+    int user_input = _get_user_input();
+    Level level = INVALID;
+    
+    switch (user_input) 
+    {
+        case 1:
+            level = EASY;
+            break;
+        case 2:
+            level = MEDIUM;
+            break;
+        case 3:
+            level = HARD;
+            break;
+    }
+
+    return level;
 }
 
 int get_move()
 {
-    char move[20]; 
-    scanf("%[^\n]%*c", move);
-    if( (strlen(move) == 1) && isdigit(move[0]) )
+    int position = _get_user_input();
+    if( position != -1)
     {
-        // conversion to internal board value range (0-8) from user input (1-9)
-        return chartoint(move[0]) - 1;
+        return _convert_to_internal_board_position(position);
     }
-    return -1;
+    return position;
 }
+
+
+
+

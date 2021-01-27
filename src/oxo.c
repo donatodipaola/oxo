@@ -30,18 +30,28 @@ int main()
     int board[BOARD_NUMBER_OF_SQUARES];
     init_board(board);
 
+    Level level = 0;
+    do 
+    {
+        display_menu_screen();
+        level = get_level_choice();
+        clean_screen();
+    } 
+    while (! is_valid_level(level));
+
     Marker turn_marker;
     srand(time(NULL));
 
-    int a_coin_toss = rand() % 2;
-    if (a_coin_toss == 0)
+    int coin_toss = rand() % 2;
+    if (coin_toss == 0)
         turn_marker = HUMAN_MARKER;
-    if (a_coin_toss == 1)
+    if (coin_toss == 1)
         turn_marker = AI_MARKER;
 
     Status status = UNKNOWN;
 
-    do {
+    do 
+    {
         display_game_screen(board, turn_marker);
 
         switch (turn_marker) 
@@ -53,7 +63,7 @@ int main()
                 }
                 break;
             case AI_MARKER:
-                if( move(board, ai_move(board), AI_MARKER) )
+                if( move(board, ai_move(board, level), AI_MARKER) )
                 {
                     printf("\n");
                     turn_marker = HUMAN_MARKER;
@@ -69,7 +79,8 @@ int main()
         }
 
         clean_screen();
-    } while (! is_game_over(board, &status));
+    } 
+    while (! is_game_over(board, &status));
 
     display_result_screen(board, status);
 

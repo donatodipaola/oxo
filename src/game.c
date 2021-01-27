@@ -79,7 +79,23 @@ void init_board(int* board)
     }
 }
 
-int move(int* board, const int position, Marker marker)
+int is_valid_level(const Level level)
+{
+    int result = 0;
+    switch (level) 
+    { 
+        case EASY:
+        case MEDIUM:
+        case HARD:
+            result = 1;
+            break;
+        case INVALID:
+            break;
+    }
+    return result;
+}
+
+int move(int* board, const int position, const Marker marker)
 {
     if( _is_position_valid(position) &&
         _is_position_empty(board, position) )
