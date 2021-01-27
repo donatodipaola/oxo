@@ -25,6 +25,6 @@
 #define AI_MARKER       O
 #define HUMAN_MARKER    X
 
-int ai_move(int* board, const Level level);
+int ai_move(const int* board, const Level level);
 
 #endif /* __AI_H__ */
