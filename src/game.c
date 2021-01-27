@@ -21,7 +21,7 @@
 
 int _is_position_valid(const int position)
 {
-    if( position >= 0 && position < BOARD_NUMEBER_OF_SQUARES )
+    if( position >= 0 && position < BOARD_NUMBER_OF_SQUARES )
     {
         return 1;
     }
@@ -39,11 +39,14 @@ int _is_position_empty(const int* board, const int position)
 
 int _are_no_more_moves(const int* board)
 {
-  for (int i=0; i < BOARD_NUMEBER_OF_SQUARES; ++i) {
-      if ( board[i] == EMPTY )
-          return 0;
-  }
-  return 1;
+    for (int i=0; i < BOARD_NUMBER_OF_SQUARES; ++i) 
+    {
+        if ( board[i] == EMPTY )
+        {
+            return 0;
+        }
+    } 
+    return 1;
 }
 
 int _has_player_won(const int* board, const Marker marker)
@@ -61,14 +64,17 @@ int _has_player_won(const int* board, const Marker marker)
         (board[0] == marker && board[4] == marker && board[8] == marker) ||
         (board[2] == marker && board[4] == marker && board[6] == marker)
     )
+    {    
         return 1;
+    }
     return 0;
 }
 
 
 void init_board(int* board)
 {
-    for (int i=0; i < BOARD_NUMEBER_OF_SQUARES; ++i) {
+    for (int i=0; i < BOARD_NUMBER_OF_SQUARES; ++i) 
+    {
         board[i] = EMPTY;
     }
 }

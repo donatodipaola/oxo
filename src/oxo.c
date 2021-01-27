@@ -27,7 +27,7 @@
 
 int main()
 {
-    int board[BOARD_NUMEBER_OF_SQUARES];
+    int board[BOARD_NUMBER_OF_SQUARES];
     init_board(board);
 
     Marker turn_marker;
@@ -44,24 +44,28 @@ int main()
     do {
         display_game_screen(board, turn_marker);
 
-        switch (turn_marker) {
-        case HUMAN_MARKER:
-            if( move(board, get_move(), HUMAN_MARKER) )
-                turn_marker = AI_MARKER;
-            break;
-        case AI_MARKER:
-            if( move(board, ai_move(board), AI_MARKER) )
-            {
-                printf("\n");
-                turn_marker = HUMAN_MARKER;
-            } else
-            {
-              // AI picked an invalid position... something went wrong
-              abort();
-            }
-            break;
-        case EMPTY:
-            break;
+        switch (turn_marker) 
+        {
+            case HUMAN_MARKER:
+                if( move(board, get_move(), HUMAN_MARKER) )
+                {
+                    turn_marker = AI_MARKER;
+                }
+                break;
+            case AI_MARKER:
+                if( move(board, ai_move(board), AI_MARKER) )
+                {
+                    printf("\n");
+                    turn_marker = HUMAN_MARKER;
+                } 
+                else
+                {
+                    // AI picked an invalid position... something went wrong
+                    abort();
+                }
+                break;
+            case EMPTY:
+                break;
         }
 
         clean_screen();
